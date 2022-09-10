@@ -44,7 +44,7 @@ class App
     end
     book_index = gets.chomp.to_i
 
-    while !book_index.between?(0, @books.length())
+    until book_index.between?(0, @books.length - 1)
       puts 'Please select book you want to rent by number: '
       @books.each do |book, index|
         puts "#{index}) #{book}/n"
@@ -59,7 +59,7 @@ class App
     end
     person_index = gets.chomp.to_i
 
-    while !person_index.between?(0, @people.length())
+    until person_index.between?(0, @people.length - 1)
       puts 'Please select who wants to rent by number: '
       @people.each do |person, index|
         puts "#{index}) #{person}/n"
