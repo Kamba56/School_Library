@@ -43,15 +43,33 @@ class App
       puts "#{index}) #{book}"
     end
     book_index = gets.chomp.to_i
+
+    while !book_index.between?(0, @books.length())
+      puts 'Please select book you want to rent by number: '
+      @books.each do |book, index|
+        puts "#{index}) #{book}/n"
+      end
+      book_index = gets.chomp.to_i
+    end
+
     book = @books[book_index]
-    puts "Select who wants to rent by number: "
+    puts 'Select who wants to rent by number: '
     @people.each do |person, index|
       puts "#{index}) #{person}"
     end
     person_index = gets.chomp.to_i
+
+    while !person_index.between?(0, @people.length())
+      puts 'Please select who wants to rent by number: '
+      @people.each do |person, index|
+        puts "#{index}) #{person}/n"
+      end
+      person_index = gets.chomp.to_i
+    end
+
     person = @people[person_index]
 
-    rent = Rental.new(person, book)
+    Rental.new(person, book)
   end
 
   private
