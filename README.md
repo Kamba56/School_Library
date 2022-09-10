@@ -17,6 +17,15 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 - Ruby
 
+### Setup
+- clone the repo using
+    ```git clone https://github.com/Kamba56/School_Library.git```
+- Change directory
+    `cd School_Library`
+
+### Deployment
+Run `ruby main.rb`
+
 ## Authors
 
 👤 **Toma JOhn Musa**
