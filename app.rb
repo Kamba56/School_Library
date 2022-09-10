@@ -25,6 +25,7 @@ class App
     age = gets.chomp
 
     who_to_create(input, name, age)
+    puts 'Successful'
   end
 
   def create_book
@@ -35,41 +36,42 @@ class App
 
     book = Book.new(title, author)
     @books.push(book)
+    puts 'Successfully created book'
   end
 
   def create_rental
     puts 'Select book you want to rent by number: '
-    @books.each do |book, index|
-      puts "#{index}) #{book}"
+    @books.each_with_index do |book, index|
+      puts "#{index}) #{book.title} By #{book.author}"
     end
     book_index = gets.chomp.to_i
 
-    until book_index.between?(0, @books.length - 1)
-      puts 'Please select book you want to rent by number: '
-      @books.each do |book, index|
-        puts "#{index}) #{book}/n"
-      end
-      book_index = gets.chomp.to_i
-    end
-
     book = @books[book_index]
     puts 'Select who wants to rent by number: '
-    @people.each do |person, index|
-      puts "#{index}) #{person}"
+    @people.each_with_index do |person, index|
+      type = person.is_a?(Student) ? 'Student' : 'Teacher'
+      puts "#{index}) [#{type}] Name: #{person.name} Age: #{person.age}"
     end
     person_index = gets.chomp.to_i
-
-    until person_index.between?(0, @people.length - 1)
-      puts 'Please select who wants to rent by number: '
-      @people.each do |person, index|
-        puts "#{index}) #{person}/n"
-      end
-      person_index = gets.chomp.to_i
-    end
 
     person = @people[person_index]
 
     Rental.new(person, book)
+    puts 'Rent successful'
+  end
+
+  def view_rental
+    puts 'Please type in the persons ID: '
+    id = gets.chomp.to_i
+    @people.each do |person|
+      if person.id == id
+        return person.rental.map do |e|
+          "Book: #{e.book.title} Rented By: #{person.name} On: #{e.date}"
+        end
+      end
+    end
+
+    'No books rented'
   end
 
   private
@@ -78,17 +80,17 @@ class App
     if input == '1'
       print 'Enter classroom: '
       classroom = gets.chomp
-      print 'Enter parent permision y/n'
+      print 'Enter parent permision y/n: '
       perm = gets.chomp
       while perm != 'y' && perm != 'n'
-        print 'Please enter parent permision y/n'
+        print 'Please enter parent permision y/n: '
         perm = gets.chomp
       end
       perm = perm == 'y'
-      stud = Student.new(age, classroom, name, perm)
+      stud = Student.new(age, classroom, perm, name)
     else
       print 'Enter specialization: '
-      specialization = gets.chomps
+      specialization = gets.chomp
       stud = Teacher.new(age, specialization, name)
     end
     @people.push(stud)

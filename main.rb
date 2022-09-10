@@ -1,22 +1,48 @@
 require_relative 'app'
 
 def ask_user
-  print "Select what do you want to do /n"
-  puts "1 List all books.
+  puts 'Select what you want to do'
+  puts "
+    1 List all books.
     2 List all people.
     3 Create a person.
     4 Create a book.
     5 Create a rental.
-    6 Exit."
+    6 List all rentals for a given person id.
+    7 Exit."
   gets.chomp.to_i
 end
 
+def process_choice(choice, my_app)
+  case choice
+  when 1
+    my_app.books.each_with_index do |book, index|
+      puts "#{index + 1}) Title: #{book.title}, Author: #{book.author}"
+    end
+  when 2
+    my_app.people.each_with_index do |person, index|
+      type = person.is_a?(Student) ? 'Student' : 'Teacher'
+      puts "#{index}) [#{type}] Name: #{person.name} ID: #{person.id} Age: #{person.age}"
+    end
+  when 3
+    my_app.create_person
+  when 4
+    my_app.create_book
+  when 5
+    my_app.create_rental
+  when 6
+    puts my_app.view_rental
+  end
+end
+
 def main
-  my_app = App.new()
-  
+  my_app = App.new
   loop do
-    choice = ask_user until choice.between?(1,6)
-    break if choice == 6
+    choice = ask_user
+    break if choice == 7
+
     process_choice(choice, my_app)
   end
 end
+
+main
