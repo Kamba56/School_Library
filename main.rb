@@ -13,17 +13,25 @@ def ask_user
   gets.chomp.to_i
 end
 
+def loop_books(my_app)
+  my_app.books.each_with_index do |book, index|
+    puts "#{index + 1}) Title: #{book.title}, Author: #{book.author}"
+  end
+end
+
+def loop_people(my_app)
+  my_app.people.each_with_index do |person, index|
+    type = person.is_a?(Student) ? 'Student' : 'Teacher'
+    puts "#{index}) [#{type}] Name: #{person.name} ID: #{person.id} Age: #{person.age}"
+  end
+end
+
 def process_choice(choice, my_app)
   case choice
   when 1
-    my_app.books.each_with_index do |book, index|
-      puts "#{index + 1}) Title: #{book.title}, Author: #{book.author}"
-    end
+    loop_books(my_app)
   when 2
-    my_app.people.each_with_index do |person, index|
-      type = person.is_a?(Student) ? 'Student' : 'Teacher'
-      puts "#{index}) [#{type}] Name: #{person.name} ID: #{person.id} Age: #{person.age}"
-    end
+    loop_people(my_app)
   when 3
     my_app.create_person
   when 4
