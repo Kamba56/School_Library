@@ -22,7 +22,7 @@ end
 def loop_people(my_app)
   my_app.people.each_with_index do |person, index|
     type = person.is_a?(Student) ? 'Student' : 'Teacher'
-    puts "#{index}) [#{type}] Name: #{person.name} ID: #{person.id} Age: #{person.age}"
+    puts "#{index}) [#{type}] Name: #{person.name} Id: #{person.id} Age: #{person.age}"
   end
 end
 
